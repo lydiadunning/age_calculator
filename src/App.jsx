@@ -1,91 +1,121 @@
 import { useState } from 'react'
 import arrowUrl from './assets/images/icon-arrow.svg'
 import './App.css'
+import Inputs from './components/Inputs.jsx'
+import { isExists, intervalToDuration } from 'date-fns'
+import OutputRow from './components/OutputRow.jsx'
+
 
 function App() {
-  const [form, setForm] = useState({
+  const currentYear = new Date().getFullYear()
+  const monthStrings = {
     day: '',
     month: '',
     year: '',
-  })
-
-  const [output, setOutput] = useState({
-    day: '',
-    month: '',
-    year: '',
-  })
-
-  const calculateAge = (birthDate) => {
-    const today = new Date()
-    // month - 1 because the monthIndex starts at 0 
-    const birthDay = new Date(birthDate.year, birthDate.month - 1, birthDate.day)
-    const ageInMilliseconds = today - birthDay
-
-    const millisecondsInDay = 86400000
-    const daysInYear = 365.25
-    const daysInMonth = 30.44
-
-
-    // I added a function to see if it improves these repetitive calculations. I don't think it does.
-    const findElapsed = (units, daysInUnit = 1) => {
-      return Math.floor(units / daysInUnit)
-    }
-
-    const daysElapsedTotal = Math.floor(ageInMilliseconds / millisecondsInDay)
-    const yearsElapsed = findElapsed(daysElapsedTotal, daysInYear)
-    const yearsRemainder = daysElapsedTotal - (yearsElapsed * daysInYear)
-    const monthsElapsed = findElapsed(yearsRemainder, daysInMonth)
-    const monthsRemainder = yearsRemainder - (monthsElapsed * daysInMonth)
-    const daysElapsed = findElapsed(monthsRemainder)
-
-    return (
-      {
-        day: daysElapsed,
-        month: monthsElapsed,
-        year: yearsElapsed
-      }
-    )
-
-    // 1000 ms in s, 60 s in m, 60 m in h, 24 h in day, 365.25 days in a year
-    // ~30.44 days in a month.
-    // Between 28 and 31 days in a month, so I'm not thrilled with the accuracy
-    // of this method. But I'm doing this to practice react and css, so I don't 
-    // have sufficient justification to find a more accurate date calculation resource.
   }
 
-  const clickHandler = (event, ) => {
-    setOutput(
-      calculateAge(form)
-    )
-    console.log(output)
+  const [form, setForm] = useState(monthStrings)
+  const [output, setOutput] = useState(monthStrings)
+  const [errors, setErrors] = useState(monthStrings)
+
+  const calculateAge = (birthDate) => {
+    // initially, I calculated this myself using Date objects. However, date objects can't identify invalid dates,
+    // even using methods which exist for that specific purpose, at least in my current broswer. I solved this 
+    // issue, and improved the quality of this calculation considerably, by making use of the library date-fns.
+    const pastDateExists = isExists(parseInt(birthDate.year), parseInt(birthDate.month-1), parseInt(birthDate.day))
+
+    return new Promise((resolve, reject) => {
+      if (pastDateExists) {
+
+        const today = new Date()
+        const dateIsoString = `${birthDate.year.padStart(4, '0')}-${birthDate.month.padStart(2, '0')}-${birthDate.day.padStart(2, '0')}`
+        const birthDay = new Date(dateIsoString)
+
+        const difference = intervalToDuration({
+          start: today,
+          end: birthDay
+        })
+
+        resolve({
+          day: difference.days.toString(),
+          month: difference.months.toString(),
+          year: difference.years.toString()
+        });
+
+      } else {
+        console.log('date does not exist, in else in promise')
+        // month and year strings in errors get a space to add styling to the month and year form elements, in Entry
+        setErrors({
+          day: 'Must be a valid date',
+          month: " ",
+          year: ' '
+        })
+        reject('Invalid Date')
+      }
+    })
+  } 
+    
+
+  const formValidator = () => {
+    /*
+    - Receive validation errors if:
+    - Any field is empty when the form is submitted
+    - The day number is not between 1-31
+    - The month number is not between 1-12
+    - The year is in the future
+    - The date is invalid e.g. 31/04/1991 (there are 30 days in April) 
+    */
+    const today = new Date()
+
+    const requiredError = 'This field is required'
+    const dayError = form.day === '' ? requiredError
+                      : (form.day <= 0 || form.day > 31) ? 'Must be a valid day' : '';
+    const monthError = form.month === '' ? requiredError
+                      : (form.month <= 0 || form.month > 12) ? 'Must be a valid month' : '';
+    const yearError = form.year === '' ? requiredError
+                      : form.year > today.getFullYear() ? 'Must be in the past' : '';
+    const allErrors = {day: dayError, month: monthError, year: yearError}
+    const noErrors = Object.values(allErrors).every(error => error === '') 
+    // This is my first time adding a promise to my own project. I have doubts about whether
+    // handling errors here instead of after rejecting the promise is acceptable
+    return new Promise((resolve, reject) => {
+      if (noErrors) {
+        resolve(setErrors(allErrors));
+      } else {
+        Object.entries(allErrors).forEach(([errorField, errorString]) => {
+          if (errorString != '') {
+            console.error(`${errorField}: ${errorString}`)
+          }
+        setErrors(allErrors)
+        reject('Errors in form validation');
+        })
+      }
+    });
+  }
+
+  const clickHandler = (event) => {
+    // event.preventDefault();
+    formValidator(form)
+      .then(() => calculateAge(form))
+      .then((ageOutput) => setOutput(ageOutput))
+      .catch(error => {
+        setOutput(monthStrings)
+        console.error(error)
+      })
   }
 
   return (
     <div className='app'>
-      <form className="input">
-        <label>day
-          <input type='number' placeholder='DD' value={ form.day } onChange={e => {
-            setForm({...form, day: e.target.value})
-          }} />
-        </label>
-        <label >month
-          <input type='number' placeholder='MM' value={ form.month } onChange={e => {
-            setForm({...form, month: e.target.value})
-          }} />
-        </label>
-        <label>year
-          <input  type='number' placeholder='YYYY' value={ form.year } onChange={e => {
-            setForm({...form, year: e.target.value})
-          }} />
-        </label>
-      </form>
+      <Inputs form={ form } setForm={ setForm } errors={ errors } />
       <div className='divider'>
-      <hr/>
-      <input type='image' src={ arrowUrl } className='arrow' onClick={ clickHandler } /></div> 
+        <hr/>
+        <input type='image' src={ arrowUrl } className='arrow' onClick={ clickHandler } />
+        <hr className='mobile-only'/>
+      </div> 
       <div className='output'>
-        <p className='big-bold'><span className='purple'>{ output.year }</span> years</p>
-        <p className='big-bold'><span className='purple'>{ output.month }</span> months</p>
-        <p className='big-bold'><span className='purple'>{ output.day }</span> days</p>
+        <OutputRow output={ output } field={ 'year' } />
+        <OutputRow output={ output } field={ 'month' } /> 
+        <OutputRow output={ output } field={ 'day' } /> 
       </div>
     </div>
   )
@@ -100,13 +130,13 @@ export default App
 // X 4. manage state for output, return 100-input (that's a minus)
 // X 5. style inputs and outputs
 // X 6. replace placeholder output function with a real now-input function
-// 7. refine styling with border-radius, sizing, and colors
-// 8. add error messaging
-// 9. style error messaging
-// 10. add hover and other conditional styles
-// 11. add animation on result
+// X 7. refine styling with border-radius, sizing, and colors
+// X 8. add data validation and error messaging
+// X 9. style error messaging
+// X 10. add hover and other conditional styles
+// X11. add animation on result
 // 12. confirm mobile design, tweak as necessary
-// 12. test according to readme
+// 12. test according to readme - test data validation with first and last day of year
 // 13. fix issues identified in testing
 
 

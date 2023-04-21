@@ -21,7 +21,6 @@
        url("./build/assets/assets/fonts/Poppins-Bold.ttf") format("ttf");
 } */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,800&display=swap');
 
 * {
   margin: 0;
@@ -46,34 +45,19 @@
  width: max(50vw, 20.5rem);
  border-radius: 1rem 1rem 8rem 1rem;
  margin: 0 .5rem;
- padding: 2rem 1.5rem;
-
+ padding: 2.5rem;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
+@media(max-width: 600px) {
+  .app {
+    padding: 3rem 1.5rem;
+  }
 }
-
-hr {
-  flex: 1 1 15rem;
-  border-color: var(--light-grey);
-  border-style: solid;
-}
-
-.arrow {
-  background-color: var(--purple);
-  border-radius: 50%;
-  flex: 0 0 3rem;
-  aspect-ratio: 1 / 1;
-}
-
-
 
 form {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 label {
@@ -92,14 +76,81 @@ input {
   font-size: 2rem;
   font-weight: 700;
   border: 1px solid var(--light-grey);
-  padding: .25em .5em;
+  padding: 0.5rem 1.25rem;
   border-radius: .25em;
   margin: .25rem 0;
+  cursor: pointer;
+}
+
+.hasError {
+  color: var(--red);
+}
+
+.hasError input {
+  border-color: red;
+}
+
+.error {
+
+}
+
+input:hover {
+  border-color: var(--off-black);
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: var(--smokey-grey);
 }
+
+@media(max-width: 600px) {
+  form {
+    gap: 1rem;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+}
+
+hr {
+  flex: 1 1 15rem;
+  border-color: var(--light-grey);
+  border-style: solid;
+}
+
+.arrow {
+  background-color: var(--purple);
+  border-radius: 50%;
+  flex: 0 0 4rem;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  border: none;
+  width: 3.5rem;
+  padding: 1rem;
+}
+
+.arrow:hover {
+  background-color: var(--off-black);
+  border: none;
+}
+
+.mobile-only {
+  display: none;
+}
+
+@media(max-width: 600px) {
+  .arrow {
+    width: 3.75rem;
+    padding: 1.25rem;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}
+
+
 
 .output {
   color: var(--off-black);
@@ -110,8 +161,27 @@ input {
   line-height: 1em;
   letter-spacing: -.1rem;
   font-family: "Poppins", sans-serif;
+  
+
 }
 
 .purple {
   color: var(--purple);
+  letter-spacing: .1rem;
 }
+
+.purple:not(.no-output) {
+  animation-duration: 3s;
+  animation-name: background-pulse;
+}
+
+@keyframes background-pulse {
+  from {
+    color: var(--white);
+  }
+
+  to {
+    color: var(--purple);
+
+  }
+} 
