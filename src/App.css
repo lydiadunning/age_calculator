@@ -1,6 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap');
 
 :root {
   --purple: hsl(259, 100%, 65%);
@@ -14,11 +12,13 @@
   font-size: 16px;
 }
 
+/* I'm keeping this here, but it never seemed to work consistently. */
 /* @font-face {
   font-family: "Poppins";
-  src: url("./build/assets/fonts/Poppins-Italic.ttf") format("ttf"), 
-       url("./build/assets/assets/fonts/Poppins-ExtraBoldItalic.ttf") format("ttf"),
-       url("./build/assets/assets/fonts/Poppins-Bold.ttf") format("ttf");
+
+  src: url("./assets/fonts/Poppins-Bold.ttf") format("truetype"),
+       url("./assets/fonts/Poppins-Italic.ttf") format("truetype"),
+       url("./assets/fonts/Poppins-ExtraBoldItalic.ttf") format("truetype");
 } */
 
 
@@ -42,10 +42,11 @@
 
 .app {
  background-color: var(--white);
- width: max(50vw, 20.5rem);
- border-radius: 1rem 1rem 8rem 1rem;
+ max-width: 52.5rem;
+ width: max(67vw, 21.5rem);
+ border-radius: 1rem 1rem 11rem 1rem;
  margin: 0 .5rem;
- padding: 2.5rem;
+ padding: 3.35rem;
 }
 
 @media(max-width: 600px) {
@@ -54,10 +55,16 @@
   }
 }
 
+@media(min-width: 1200px) {
+  .app {
+    width: max(58vw);
+  }
+}
+
 form {
   display: flex;
   flex-direction: row;
-  gap: 1.5rem;
+  gap: min(5%, 2rem);
 }
 
 label {
@@ -65,21 +72,21 @@ label {
   flex-direction: column;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: .75rem;
+  font-size: clamp(.75rem ,1.35vw, 1rem);
   color: var(--smokey-grey);
-  letter-spacing: .25rem;
-  width: min(12em, 30%);
+  letter-spacing: .25em;
+  width: min(10rem, 30%);
 }
 
 input {
   color: var(--off-black);
-  font-size: 2rem;
   font-weight: 700;
   border: 1px solid var(--light-grey);
-  padding: 0.5rem 1.25rem;
   border-radius: .25em;
   margin: .25rem 0;
   cursor: pointer;
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
+  padding: .75rem 15%;
 }
 
 .hasError {
@@ -91,7 +98,10 @@ input {
 }
 
 .error {
-
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 input:hover {
@@ -111,10 +121,11 @@ input:hover {
 .divider {
   display: flex;
   align-items: center;
+  margin: -.5rem;
 }
 
 hr {
-  flex: 1 1 15rem;
+  flex: 2 1 10rem;
   border-color: var(--light-grey);
   border-style: solid;
 }
@@ -122,12 +133,12 @@ hr {
 .arrow {
   background-color: var(--purple);
   border-radius: 50%;
-  flex: 0 0 4rem;
+  flex: 0 2 6rem;
+  padding: 1.5rem;
   aspect-ratio: 1 / 1;
   cursor: pointer;
   border: none;
   width: 3.5rem;
-  padding: 1rem;
 }
 
 .arrow:hover {
@@ -137,45 +148,44 @@ hr {
 
 .mobile-only {
   display: none;
+  flex-grow: 0;
+  flex-shrink: 1;
 }
 
-@media(max-width: 600px) {
+@media(max-width: 1200px) {
+  .divider {
+    padding: 2rem 0 2.5rem 0;
+  }
   .arrow {
-    width: 3.75rem;
+    flex: 0 0 4rem;
     padding: 1.25rem;
   }
-
   .mobile-only {
     display: block;
   }
 }
 
-
-
 .output {
   color: var(--off-black);
-  /* font-size: 4rem; */
-  font-size: 3.5rem;
   font-style: italic;
   font-weight: 800;
-  line-height: 1em;
+  line-height: 1.1em;
   letter-spacing: -.1rem;
   font-family: "Poppins", sans-serif;
-  
-
+  font-size: clamp(3.5rem, 9.25vw, 6.5rem)
 }
 
 .purple {
   color: var(--purple);
-  letter-spacing: .1rem;
+  margin-right: -.1em; 
 }
 
 .purple:not(.no-output) {
   animation-duration: 3s;
-  animation-name: background-pulse;
+  animation-name: fade-in;
 }
 
-@keyframes background-pulse {
+@keyframes fade-in {
   from {
     color: var(--white);
   }

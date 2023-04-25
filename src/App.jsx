@@ -4,7 +4,8 @@ import './App.css'
 import Inputs from './components/Inputs.jsx'
 import { isExists, intervalToDuration } from 'date-fns'
 import OutputRow from './components/OutputRow.jsx'
-
+import MobileImage from './mobile-design.jpg'
+import DesktopImage from './desktop-design.jpg'
 
 function App() {
   const currentYear = new Date().getFullYear()
@@ -23,36 +24,63 @@ function App() {
     // even using methods which exist for that specific purpose, at least in my current broswer. I solved this 
     // issue, and improved the quality of this calculation considerably, by making use of the library date-fns.
     const pastDateExists = isExists(parseInt(birthDate.year), parseInt(birthDate.month-1), parseInt(birthDate.day))
+    if (pastDateExists) {
 
-    return new Promise((resolve, reject) => {
-      if (pastDateExists) {
+      const today = new Date()
+      const dateIsoString = `${birthDate.year.padStart(4, '0')}-${birthDate.month.padStart(2, '0')}-${birthDate.day.padStart(2, '0')}`
+      const birthDay = new Date(dateIsoString)
 
-        const today = new Date()
-        const dateIsoString = `${birthDate.year.padStart(4, '0')}-${birthDate.month.padStart(2, '0')}-${birthDate.day.padStart(2, '0')}`
-        const birthDay = new Date(dateIsoString)
+      const difference = intervalToDuration({
+        start: today,
+        end: birthDay
+      })
 
-        const difference = intervalToDuration({
-          start: today,
-          end: birthDay
-        })
+      return Promise.resolve({
+        day: difference.days.toString(),
+        month: difference.months.toString(),
+        year: difference.years.toString()
+      });
 
-        resolve({
-          day: difference.days.toString(),
-          month: difference.months.toString(),
-          year: difference.years.toString()
-        });
+    } else {
+      console.log('date does not exist, in else in promise')
+      // month and year strings in errors get a space to add styling to the month and year form elements, in Entry
+      setErrors({
+        day: 'Must be a valid date',
+        month: " ",
+        year: ' '
+      })
+      return Promise.reject('Invalid Date')
+    }
 
-      } else {
-        console.log('date does not exist, in else in promise')
-        // month and year strings in errors get a space to add styling to the month and year form elements, in Entry
-        setErrors({
-          day: 'Must be a valid date',
-          month: " ",
-          year: ' '
-        })
-        reject('Invalid Date')
-      }
-    })
+    // return new Promise((resolve, reject) => {
+    //   if (pastDateExists) {
+
+    //     const today = new Date()
+    //     const dateIsoString = `${birthDate.year.padStart(4, '0')}-${birthDate.month.padStart(2, '0')}-${birthDate.day.padStart(2, '0')}`
+    //     const birthDay = new Date(dateIsoString)
+
+    //     const difference = intervalToDuration({
+    //       start: today,
+    //       end: birthDay
+    //     })
+
+    //     resolve({
+    //       day: difference.days.toString(),
+    //       month: difference.months.toString(),
+    //       year: difference.years.toString()
+    //     });
+
+    //   } else {
+    //     console.log('date does not exist, in else in promise')
+    //     // month and year strings in errors get a space to add styling to the month and year form elements, in Entry
+    //     setErrors({
+    //       day: 'Must be a valid date',
+    //       month: " ",
+    //       year: ' '
+    //     })
+    //     reject('Invalid Date')
+    //   }
+    // })
   } 
     
 
@@ -134,7 +162,7 @@ export default App
 // X 8. add data validation and error messaging
 // X 9. style error messaging
 // X 10. add hover and other conditional styles
-// X11. add animation on result
+// X 11. add animation on result
 // 12. confirm mobile design, tweak as necessary
 // 12. test according to readme - test data validation with first and last day of year
 // 13. fix issues identified in testing
