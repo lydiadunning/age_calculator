@@ -2,13 +2,6 @@ import Entry from './Entry.jsx'
 
 const Inputs = ({ form, setForm, errors }) => {
 
-
-
-	// const formChangeHandler = ( e ) => {
-	// 	setForm({ ...form, [entry]: e.target.value.padStart(entry === 'year' ? 4 : 2, '0') })
-	// }
-	
-
   return(
 		<form className="input">
 			<Entry entry='day' placeholder='DD' error={ errors.day } 
