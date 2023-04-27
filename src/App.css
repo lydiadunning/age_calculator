@@ -2,12 +2,12 @@
 
 :root {
   --purple: hsl(259, 100%, 65%);
-  --red: hsl(0, 100%, 67%);
-  --white: hsl(0, 0%, 100%);
-  --off-white: hsl(0, 0%, 94%);
-  --light-grey: hsl(0, 0%, 86%);
-  --smokey-grey: hsl(0, 1%, 44%);
-  --off-black: hsl(0, 0%, 8%);
+  --error-red: hsl(0, 100%, 67%);
+  --component-background: hsl(0, 0%, 100%);
+  --backdrop: hsl(0, 0%, 94%);
+  --line-outline: hsl(0, 0%, 86%);
+  --subtle-text: hsl(0, 1%, 44%);
+  --text: hsl(0, 0%, 8%);
 
   font-size: 16px;
 }
@@ -20,47 +20,29 @@
 }
 
 #root {
-  background-color: var(--off-white);
+  background-color: var(--backdrop);
   min-height: 100vh;
-  width: 100vw;
   display: grid;
   place-content: center;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
 
-@media(max-width: 600px) {
-  #root {
-    align-content: flex-start;
-    padding-top: 5.5rem;
-  }
-}
-
 .app {
- background-color: var(--white);
+ background-color: var(--component-background);
  max-width: 52.5rem;
  width: max(67vw, 21.5rem);
  border-radius: 1rem 1rem 11rem 1rem;
  margin: 0 .5rem;
- padding: 3.35rem;
+ padding: max(3rem, 6.3%) max(1.5rem, 6.3%)
 }
 
-@media(max-width: 600px) {
-  .app {
-    padding: 3rem 1.5rem;
-  }
-}
 
-@media(min-width: 1200px) {
-  .app {
-    width: max(58vw);
-  }
-}
 
 form {
   display: flex;
   flex-direction: row;
-  gap: min(5%, 2rem);
+  gap: min(5.5%, 2rem)
 }
 
 label {
@@ -69,14 +51,14 @@ label {
   font-weight: 700;
   text-transform: uppercase;
   font-size: clamp(.75rem ,1.35vw, 1rem);
-  color: var(--smokey-grey);
+  color: var(--subtle-text);
   letter-spacing: .25em;
   width: min(10rem, 30%);
 }
 
 input {
-  color: var(--off-black);
-  border: 1px solid var(--light-grey);
+  color: var(--outcome-text);
+  border: 1px solid var(--line-outline);
   border-radius: .25em;
   margin: .25rem 0;
   cursor: pointer;
@@ -85,7 +67,7 @@ input {
 }
 
 .hasError {
-  color: var(--red);
+  color: var(--error-red);
 }
 
 .hasError input {
@@ -100,17 +82,11 @@ input {
 }
 
 input:hover {
-  border-color: var(--off-black);
+  border-color: var(--outcome-text);
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: var(--smokey-grey);
-}
-
-@media(max-width: 600px) {
-  form {
-    gap: 1rem;
-  }
+  color: var(--subtle-text);
 }
 
 .divider {
@@ -121,7 +97,7 @@ input:hover {
 
 hr {
   flex: 2 1 10rem;
-  border-color: var(--light-grey);
+  border-color: var(--line-outline);
   border-style: solid;
 }
 
@@ -133,15 +109,14 @@ hr {
   aspect-ratio: 1 / 1;
   cursor: pointer;
   border: none;
-  width: 3.5rem;
 }
 
 .arrow:hover {
-  background-color: var(--off-black);
+  background-color: var(--outcome-text);
   border: none;
 }
 
-.mobile-only {
+.narrow-only {
   display: none;
   flex-grow: 0;
   flex-shrink: 1;
@@ -155,13 +130,13 @@ hr {
     flex: 0 0 4rem;
     padding: 1.25rem;
   }
-  .mobile-only {
-    display: block;
+  .narrow-only {
+    display: block; 
   }
 }
 
 .output {
-  color: var(--off-black);
+  color: var(--outcome-text);
   font-style: italic;
   font-weight: 800;
   line-height: 1.1em;
@@ -180,12 +155,21 @@ hr {
   animation-name: fade-in;
 }
 
-.attribution { font-size: 11px; text-align: center; }
-.attribution a { color: hsl(228, 45%, 44%); }
+.attribution { 
+  position: fixed;
+  font-size: 11px; 
+  text-align: center; 
+  bottom: 0rem;
+  left: calc(50% - 10rem);
+}
+
+.attribution a { 
+  color: hsl(228, 45%, 44%); 
+}
 
 @keyframes fade-in {
   from {
-    color: var(--white);
+    color: var(--component-background);
   }
 
   to {

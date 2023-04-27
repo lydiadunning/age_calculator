@@ -7,6 +7,12 @@ import OutputRow from './components/OutputRow.jsx'
 
 function App() {
   const currentYear = new Date().getFullYear()
+  // This project addresses day, month, and year in sequence, 
+  // rather than consolidating changes to these properties in 
+  // a forEach or something. I believe that with only three
+  // properties, consistent parallelism is easier to read and 
+  // understand than the alternatives, with no significant 
+  // drawbacks.
   const initialObject = {
     day: '',
     month: '',
@@ -32,18 +38,20 @@ function App() {
 
       const isAfter = compareDesc(birthDay, today) // returns -1 if today is before birthday
       if (isAfter >= 0) {
-        const difference = intervalToDuration({
+        const elapsed = intervalToDuration({ // returns time elapsed by years, months, days, etc.
           start: today,
           end: birthDay
         })
   
         return Promise.resolve({
-          day: difference.days.toString(),
-          month: difference.months.toString(),
-          year: difference.years.toString()
+          day: elapsed.days.toString(),
+          month: elapsed.months.toString(),
+          year: elapsed.years.toString()
         });  
 
       } else {
+      // month and year strings in errors get a space to add styling to the month and year form elements, 
+      // in the Entry component
         return Promise.reject({
           day: 'Date must be in the past',
           month: ' ',
@@ -52,7 +60,7 @@ function App() {
       }
     } else {
       // month and year strings in errors get a space to add styling to the month and year form elements, 
-      // in Entry
+      // in the Entry component
       return Promise.reject({
         day: 'Must be a valid date',
         month: ' ',
@@ -72,7 +80,11 @@ function App() {
                       : (form.month <= 0 || form.month > 12) ? 'Must be a valid month' : '';
     const yearError = form.year === '' ? requiredError
                       : form.year > today.getFullYear() ? 'Must be in the past' : '';
-    const allErrors = {day: dayError, month: monthError, year: yearError}
+    const allErrors = {
+      day: dayError, 
+      month: monthError, 
+      year: yearError
+    }
     const noErrors = Object.values(allErrors).every(error => error === '') 
 
     return new Promise((resolve, reject) => {
@@ -106,7 +118,7 @@ function App() {
       <div className='divider'>
         <hr/>
         <input type='image' src={ arrowUrl } className='arrow' onClick={ clickHandler } />
-        <hr className='mobile-only'/>
+        <hr className='narrow-only'/>
       </div> 
       <div className='output'>
         <OutputRow output={ output } field={ 'year' } />

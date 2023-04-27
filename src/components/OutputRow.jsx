@@ -10,7 +10,7 @@ const OutputRow = ({ output, field }) => {
   const classes = output[field] ? 'purple' : 'purple no-output'
 
   return (
-    <p><span className={ classes }>{ textOutput }</span><span> {`${field}s`}</span></p>
+    <p><span className={ classes }>{ textOutput }</span> {`${field}s`}</p>
   )
 }
 
