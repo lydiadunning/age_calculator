@@ -12,7 +12,8 @@ This is a solution to the [Age calculator app challenge on Frontend Mentor](http
 - [Skills](#skills)
   - [Using State in React](#using-state-in-react)
   - [Javascript Promises](#javascript-promises)
-  - [Continued development](#continued-development)
+- [Continued development](#continued-development)
+- [Resources used](#resources)
 - [Author](#author)
 
 ## Overview
@@ -83,7 +84,7 @@ Promises achieve asynchronous behavior in Javascript, I used them here for data 
 
 #### Why
 - I haven't worked with promises in a couple of years, and wanted to revisit the concept.
-- Input validation and error messaging are legitimate use-cases for promises in React. However, I have doubts that they're truly necessary here. If I had used a library, like Yup, I wouldn't have needed to write these.
+- Input validation and error messaging are legitimate use-cases for promises in React.  If I had used a library, like Yup, I wouldn't have needed to write these.
 #### How 
 The clickHandler uses promises to execute interactions.
 ```jsx
@@ -140,6 +141,10 @@ Prior to this project, working out the dimensions of various elements felt reall
 Part of the shift was, I think, using min(), max(), and clamp() to set sizes that changed based on screen dimensions.
 
 I incorporated an animation but it wasn't anything special. Given another opportunity, I'd like to see what animation libraries are available, and what they can do.
+
+### Resources
+
+This [article about react project structure](https://scrimba.com/articles/react-project-structure/) on scrimba helped me think about how to divide my code into separate files.
 
 ## Author
 

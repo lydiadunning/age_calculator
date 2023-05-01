@@ -6,8 +6,6 @@ import OutputRow from './components/OutputRow.jsx'
 import formValidator from './functions/formValidator.js'
 import calculateAge from './functions/calculateAge.js'
 
-
-
 function App() {
   const currentYear = new Date().getFullYear()
   // This project addresses day, month, and year in sequence, 
@@ -27,7 +25,6 @@ function App() {
   const [errors, setErrors] = useState(initialObject)
 
   const clickHandler = (event) => {
-    // console.log(calculateAge(form))
     formValidator(form)                               // Are forms filled out correctly?
       .then(() => calculateAge(form))                 // Calculate the age, or reject.
       .then((ageOutput) => {
@@ -51,9 +48,9 @@ function App() {
         <hr className='narrow-only'/>
       </div> 
       <div className='output'>
-        <OutputRow output={ output } field={ 'year' } />
-        <OutputRow output={ output } field={ 'month' } /> 
-        <OutputRow output={ output } field={ 'day' } /> 
+        <OutputRow output={ output } field= 'year' />
+        <OutputRow output={ output } field= 'month' /> 
+        <OutputRow output={ output } field= 'day' /> 
       </div>
     </div>
   )
