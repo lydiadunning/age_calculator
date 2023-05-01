@@ -7,7 +7,7 @@
   --backdrop: hsl(0, 0%, 94%);
   --line-outline: hsl(0, 0%, 86%);
   --subtle-text: hsl(0, 1%, 44%);
-  --text: hsl(0, 0%, 8%);
+  --outcome-text: hsl(0, 0%, 8%);
 
   font-size: 16px;
 }
