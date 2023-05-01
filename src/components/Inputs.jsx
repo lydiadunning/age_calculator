@@ -1,15 +1,19 @@
 import Entry from './Entry.jsx'
 
-const Inputs = ({ form, setForm, errors }) => {
+const Inputs = ({ form, setForm, errors, setErrors }) => {
 
   return(
 		<form className="input">
-			<Entry entry='day' placeholder='DD' error={ errors.day } 
-						 form={ form } setForm={ setForm }/>
-			<Entry entry='month' placeholder='MM' error={ errors.month } 
-						 form={ form } setForm={ setForm } />
-			<Entry entry='year' placeholder='YYYY' error={ errors.year } 
-						 form={ form } setForm={ setForm } />
+			{/* I don't like passing six props here, but I'm not sure how to separate it out. Maybe using context would help? */}
+			<Entry entry='day' placeholder='DD' 
+						 form={ form } setForm={ setForm }
+						  errors={ errors } setErrors={ setErrors }/>
+			<Entry entry='month' placeholder='MM' 
+						 form={ form } setForm={ setForm } 
+						 errors={ errors } setErrors={ setErrors }/>
+			<Entry entry='year' placeholder='YYYY'
+						 form={ form } setForm={ setForm } 
+						 errors={ errors }  setErrors={ setErrors }/>
 	</form>
 	)
 }
