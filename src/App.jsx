@@ -28,12 +28,10 @@ function App() {
     formValidator(form)                               // Are forms filled out correctly?
       .then(() => calculateAge(form))                 // Calculate the age, or reject.
       .then((ageOutput) => {
-        console.log(ageOutput)
         setOutput(ageOutput)                          // Set output to value returned by calculateAge
         setErrors(initialObject)                       // Reset errors to blank
       })      
       .catch(error => {
-        console.log(error)
         setOutput(initialObject)                       // Reset output to blank
         setErrors(error)                              // Set errors to relevant error messages.
       })

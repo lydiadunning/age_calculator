@@ -1,5 +1,4 @@
 const formValidator = (form) => {
-  console.log('in formValidator')
   const today = new Date()
 
   const requiredError = 'This field is required'
