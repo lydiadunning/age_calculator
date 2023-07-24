@@ -42,7 +42,7 @@ function App() {
       <Inputs form={ form } setForm={ setForm } errors={ errors } setErrors={ setErrors } />
       <div className='divider'>
         <hr/>
-        <input type='image' src={ arrowUrl } className='arrow' onClick={ clickHandler } />
+        <input type='image' src={ arrowUrl } className='arrow' onClick={ clickHandler } alt='Submit' />
         <hr className='narrow-only'/>
       </div> 
       <div className='output'>
