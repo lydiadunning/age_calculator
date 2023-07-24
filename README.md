@@ -41,7 +41,7 @@ Users should be able to:
 ### Take a Look
 
 - Solution URL: (https://www.frontendmentor.io/solutions/age-calculator-built-with-react-NshBM-iHoM)
-- Live Site URL: (lydiadunning.github.io/age_calculator/)
+- Live Site URL: (lydiadunning.github.io/age_calculator)
 
 ### Built with
 
