@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Take a Look
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: ([www.frontendmentor.io/solutions/age-calculator-built-with-react-NshBM-iHoM]https://www.frontendmentor.io/solutions/age-calculator-built-with-react-NshBM-iHoM)
+- Live Site URL: ([lydiadunning.github.io/age_calculator](https://lydiadunning.github.io/age_calculator/))
 
 ### Built with
 
@@ -124,7 +124,7 @@ In calculateAge, which runs calculations depending on various criteria, declarin
     month: difference.months.toString(),
     year: difference.years.toString()
   });
-// ... 
+// ... if else statements
   return Promise.reject({
     day: 'Date must be in the past',
     month: ' ',
@@ -137,7 +137,7 @@ Returning Promise.resolve and Promise.reject avoids a huge clunky Promise and st
 ### Continued development
 
 I feel like I had a little breakthrough around sizing in css while working on this project. I found myself sizing elements in a way that felt fluid and natural, and transitioned well between different screen dimensions.
-Prior to this project, working out the dimensions of various elements felt really fiddly. (I found formatting the default output text quite fiddly, but it fell into place when I added a space.)
+Prior to this project, working out the dimensions of various elements felt really fiddly. (I found formatting the default output text, the two purple lines, quite fiddly, but it fell into place when I added a space.)
 Part of the shift was, I think, using min(), max(), and clamp() to set sizes that changed based on screen dimensions.
 
 I incorporated an animation but it wasn't anything special. Given another opportunity, I'd like to see what animation libraries are available, and what they can do.
