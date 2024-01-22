@@ -84,7 +84,7 @@ Promises achieve asynchronous behavior in Javascript, I used them here for data 
 
 #### Why
 - I haven't worked with promises in a couple of years, and wanted to revisit the concept.
-- Input validation and error messaging are legitimate use-cases for promises in React.  If I had used a library, like Yup, I wouldn't have needed to write these.
+- Input validation and error messaging are legitimate use-cases for promises in React.  If I had handled input validation with a library, like Yup, I wouldn't have needed to write these.
 #### How 
 The clickHandler uses promises to execute interactions.
 ```jsx
